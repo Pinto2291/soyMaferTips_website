@@ -1,6 +1,7 @@
 import { onLCP, onFID, onCLS, onFCP, onTTFB } from 'web-vitals';
+import { getBackendURL } from './api';
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || '';
+const BACKEND_URL = getBackendURL();
 
 function sendToAnalytics(metric) {
   // Determine rating based on standard values

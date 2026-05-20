@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import { Link } from "react-router-dom";
+import { getBackendURL } from "../utils/api";
 import { 
   LogIn, LayoutGrid, DollarSign, BookOpen, Activity, 
   LogOut, Plus, Edit2, Trash2, CheckCircle2, AlertTriangle, XCircle, Clock
@@ -8,7 +9,8 @@ import {
 
 export const Admin = () => {
   const { store, dispatch } = useGlobalReducer();
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "";
+  const BACKEND_URL = getBackendURL();
+
 
   // UI state
   const [activeTab, setActiveTab] = useState("services"); // services, courses, performance
@@ -72,11 +74,24 @@ export const Admin = () => {
       body: JSON.stringify(loginForm)
     })
       .then(async (res) => {
-        const data = await res.json();
-        if (!res.ok) {
-          throw new Error(data.message || "Invalid credentials");
+        const contentType = res.headers.get("content-type");
+        if (contentType && contentType.includes("application/json")) {
+          const data = await res.json();
+          if (!res.ok) {
+            throw new Error(data.message || "Invalid credentials");
+          }
+          return data;
+        } else {
+          // It's not JSON! Probably an HTML error/auth redirect page
+          const text = await res.text();
+          if (window.location.hostname.includes("github.dev")) {
+            throw new Error("Port 3001 is private in your GitHub Codespace. Go to the 'Ports' tab (bottom panel), right-click port 3001 (Backend API), change Port Visibility to 'Public', and retry.");
+          }
+          if (window.location.hostname.includes("gitpod.io")) {
+            throw new Error("Port 3001 is private in your Gitpod workspace. Go to the ports list and make port 3001 'Public'.");
+          }
+          throw new Error(`Server returned a non-JSON response (status ${res.status}). Please check if backend is running.`);
         }
-        return data;
       })
       .then(data => {
         dispatch({

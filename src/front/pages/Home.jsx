@@ -9,12 +9,13 @@ import { Footer } from "../components/Footer";
 import { Cart } from "../components/Cart";
 import { ShoppingCart } from "lucide-react";
 import { startPerformanceMonitoring } from "../utils/webVitals";
+import { getBackendURL } from "../utils/api";
 
 export const Home = () => {
   const { store, dispatch } = useGlobalReducer();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedCourseForInfo, setSelectedCourseForInfo] = useState("");
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "";
+  const BACKEND_URL = getBackendURL();
 
   // 1. Fetch data on load and start Web Vitals tracking
   useEffect(() => {

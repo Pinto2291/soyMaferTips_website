@@ -1,0 +1,147 @@
+@import url('./styles/styles.css');
+
+/* Add premium visual additions for React widgets & Admin panel */
+
+:root {
+  --admin-dark: #121212;
+  --admin-glass: rgba(255, 255, 255, 0.05);
+  --admin-border: rgba(255, 255, 255, 0.1);
+  --gold-glow: 0 0 15px rgba(218, 165, 32, 0.4);
+}
+
+/* Floating Action Cart styling */
+.floating-cart-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: var(--primary-color);
+  color: var(--dark-color);
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), var(--gold-glow);
+  cursor: pointer;
+  z-index: 99;
+  transition: transform var(--transition-speed), background-color var(--transition-speed);
+}
+
+.floating-cart-btn:hover {
+  transform: scale(1.1);
+  background-color: var(--secondary-color);
+}
+
+.floating-cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #ff3333;
+  color: white;
+  border-radius: 50%;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+/* Glassmorphic Admin styling */
+.glass-panel {
+  background: var(--admin-glass);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--admin-border);
+  border-radius: 10px;
+}
+
+.glow-hover:hover {
+  box-shadow: var(--gold-glow);
+  border-color: var(--primary-color);
+}
+
+/* Sidebar sliding transition */
+.cart-sidebar {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 400px;
+  height: 100%;
+  background-color: var(--dark-color);
+  border-left: 1px solid rgba(218, 165, 32, 0.2);
+  box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 2rem;
+  overflow-y: auto;
+  color: var(--text-color-dark-bg);
+}
+
+.cart-sidebar.open {
+  right: 0;
+}
+
+.cart-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  display: none;
+}
+
+.cart-backdrop.open {
+  display: block;
+}
+
+/* Performance metrics visuals */
+.badge-good {
+  background-color: #2e7d32;
+  color: #e8f5e9;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.badge-warning {
+  background-color: #f57c00;
+  color: #fff3e0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.badge-danger {
+  background-color: #c62828;
+  color: #ffebee;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.metric-card {
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 5px solid transparent;
+}
+
+.metric-card.good {
+  border-left-color: #2e7d32;
+  background: rgba(46, 125, 50, 0.05);
+}
+
+.metric-card.warning {
+  border-left-color: #f57c00;
+  background: rgba(245, 124, 0, 0.05);
+}
+
+.metric-card.poor {
+  border-left-color: #c62828;
+  background: rgba(198, 40, 40, 0.05);
+}
